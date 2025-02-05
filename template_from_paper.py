@@ -22,10 +22,8 @@ def generate_latex_files_with_citation(base_dir, arxiv_id):
         Given an arXiv URL, fetch the BibTeX citation.
         """
         
-        # Build the bibtex URL.
         bibtex_url = f'https://arxiv.org/bibtex/{arxiv_id}'
         
-        # Get the BibTeX citation.
         response = requests.get(bibtex_url)
         if response.status_code == 200:
             return response.text
@@ -49,7 +47,6 @@ def generate_latex_files_with_citation(base_dir, arxiv_id):
         
         return updated_content
 
-    # copy latex stuff from first template
     latex_source = osp.join("templates", "nanoGPT", "latex")
     new_latex = osp.join(base_dir, "latex")
     shutil.copytree(latex_source, new_latex)
@@ -59,11 +56,8 @@ def generate_latex_files_with_citation(base_dir, arxiv_id):
         tex_content = file.read()
 
     new_citation = get_bibtex_from_arxiv(arxiv_id)
-
-    # Update the file content
     updated_tex_content = insert_bibtex_citation(tex_content, new_citation)
 
-    # Write back to the file
     with open(osp.join(new_latex, "template.tex"), 'w') as file:
         file.write(updated_tex_content)
 
@@ -149,7 +143,6 @@ def generate_and_save_template(client, assistant, arxiv_id, prompt, attachments=
         return None
 
     try:
-        # Create thread
         thread = client.beta.threads.create(
             messages=[{
                 "role": "user",
@@ -164,26 +157,21 @@ def generate_and_save_template(client, assistant, arxiv_id, prompt, attachments=
             timeout=30
         )
 
-        # Check run completion status
         if (status_message := get_run_result(run)):
             print(status_message)
             exit(1)
         
-        # Retrieve messages
         messages = client.beta.threads.messages.list(
             thread_id=thread.id,
             order="asc"
         )
         
-        # Check for empty response
         if not messages.data:
             print("No messages received")
             exit(1)
         
-        # Get final message content
         message_content = messages.data[-1].content[0].text.value
         
-        # Check for content filtering in message annotations
         annotations = messages.data[-1].content[0].text.annotations
         for ann in annotations:
             if ann.type == 'file_citation' and 'content_filter' in ann.text.lower():
@@ -376,7 +364,6 @@ if __name__ == "__main__":
             if not os.path.isdir(base_dir):
                 raise ValueError(f"Experiment directory not found: {base_dir}")
         else:
-            # Initial setup
             scratch_space_dir = 'assistant_scratch_space'
             os.makedirs(scratch_space_dir, exist_ok=True)
             
