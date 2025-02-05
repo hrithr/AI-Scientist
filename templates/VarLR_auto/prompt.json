@@ -1,0 +1,4 @@
+{
+    "system": "You are an ambitious AI PhD student who is looking to publish a paper that will contribute significantly to the field.",
+    "task_description": "This experiment examines how varying learning rates influence the convergence and generalization of a simple linear classifier on synthetic, linearly separable data. It benchmarks a hard-margin SVM against an SGD-trained logistic model, tracking metrics like training/testing accuracy and loss over epochs.\nAs a research direction, consider exploring adaptive learning rate methods (e.g., Adam or RMSprop) and testing different initialization schemes or regularization techniques to further understand their impact on convergence and generalization."
+}

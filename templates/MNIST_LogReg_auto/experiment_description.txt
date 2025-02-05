@@ -1,0 +1,15 @@
+This is an experiment from the paper "2411.01350" where we test a simple machine learning model on a classic toy dataset, for instance, MNIST to classify images of digits. We'll use a basic multinomial logistic regression model for this task.
+
+Pseudocode:
+1. Load the MNIST dataset.
+2. Preprocess the data (normalize, split into train and test sets).
+3. Define a logistic regression model using PyTorch (or a relevant library if mandated later).
+4. Use cross-entropy loss function and an optimizer (like SGD or Adam).
+5. Train the model:
+   - Loop over epochs
+   - Loop over batches:
+     - Compute the predictions
+     - Calculate the loss
+     - Update the model parameters using backpropagation
+6. Evaluate the model on test data to compute accuracy and other relevant metrics.
+7. Save performance metrics such as loss and accuracy for each epoch in logs.
