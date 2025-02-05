@@ -267,6 +267,9 @@ def execute_experiment(folder_name, initial_run=True, timeout=7200):
             if osp.exists(osp.join(cwd, f"run_0")):
                 shutil.rmtree(osp.join(cwd, f"run_0"))
             print(f"Run failed with the following error {result.stderr}")
+            if "ModuleNotFoundError" in result.stderr:
+                print("Please install the required libraries and re-run the program with the --exp_dir argument.")
+                exit(1)
             stderr_output = result.stderr
             next_prompt = ""
             if initial_run:
